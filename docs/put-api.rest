@@ -1,0 +1,8 @@
+@port = 7766
+
+put http://127.0.0.1:7766/queue-api/project1/q0?delay=0&ttl=60&tries=3
+X-token: xZ5yXTRsRVTFXZXPrmbHd0aW9uIHR
+
+{
+    "text": "text",
+}

@@ -1,0 +1,3 @@
+
+delete http://127.0.0.1:7766/queue-api/project1/q0/job/e50d7f20-bd16-4d5b-b4c4-c7ab0f5711c6
+X-token: xZ5yXTRsRVTFXZXPrmbHd0aW9uIHR

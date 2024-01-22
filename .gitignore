@@ -1,0 +1,6 @@
+.env
+api-token.json
+.vscode
+Cargo.lock
+dump.rdb
+target

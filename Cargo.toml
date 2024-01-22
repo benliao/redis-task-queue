@@ -1,0 +1,5 @@
+[workspace]
+members = ["redis-task-queue"]
+# Only check / build main crates by default (check all with `--workspace`)
+default-members = ["redis-task-queue"]
+resolver = "2"
