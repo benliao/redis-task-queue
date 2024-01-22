@@ -1,3 +1,0 @@
-
-get http://127.0.0.1:7766/queue-api/project1/q0?ttr=60
-X-token: xZ5yXTRsRVTFXZXPrmbHd0aW9uIHR

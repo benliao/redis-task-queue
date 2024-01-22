@@ -1,0 +1,27 @@
+@token=xZ5yXTRsRVTFXZXPrmbHd0aW9uIHR
+
+# @name push a new task into the queue
+put http://127.0.0.1:7766/queue-api/project1/q0?delay=0&ttl=60&tries=3
+X-token: {{token}}
+
+{
+    "text": "text",
+}
+
+###
+
+# @name get a task from the task queue
+get http://127.0.0.1:7766/queue-api/project1/q0?ttr=60
+X-token: {{token}}
+
+###
+
+# @name Queue size
+get http://127.0.0.1:7766/queue-api/project1/q0/size
+X-token: {{token}}
+
+@task_id=a0fa0068-97cf-4be9-bf81-703372adf652
+
+# @name Delete Task
+delete http://127.0.0.1:7766/queue-api/project1/q0/job/{{task_id}}
+X-token: {{token}}
