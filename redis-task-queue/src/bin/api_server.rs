@@ -72,10 +72,10 @@ where
         let auth_header = parts.headers.get("X-token");
 
         if let Some(value) = auth_header {
-            if TOKENS.contains_key(&project.project) {
-                if &*TOKENS[&project.project] == value {
+            if TOKENS.contains_key(&project.project) &&
+                &*TOKENS[&project.project] == value {
                     return Ok(Self);
-                }
+                
             }
         }
 

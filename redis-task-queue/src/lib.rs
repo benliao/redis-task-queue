@@ -42,7 +42,7 @@ pub async fn queue_len(
 
 pub async fn delete_job(
     State(con): State<MultiplexedConnection>,
-    Path((project, queue_id, job_id)): Path<(String, String, String)>,
+    Path((_project, _queue_id, job_id)): Path<(String, String, String)>,
 ) -> impl IntoResponse {
     debug!("job_id:{}", job_id);
 
@@ -53,7 +53,16 @@ pub async fn delete_job(
         .await
         .unwrap();
 
-    StatusCode::OK
+    match result { 
+        Some(i) => {
+            if i > 0 {
+                StatusCode::OK
+            }else {
+                StatusCode::NOT_FOUND
+            }
+        },
+        None => StatusCode::NOT_FOUND
+    }
 }
 
 pub async fn insert_job(
@@ -74,8 +83,8 @@ pub async fn insert_job(
     let now = chrono::Utc::now().timestamp();
 
     //use timestamp for easy process.
-    job.ttl = now + &job.ttl;
-    job.delay = now + &job.delay;
+    job.ttl += now;
+    job.delay += now;
 
     debug!("job: {:?}", &job);
 
@@ -153,7 +162,7 @@ async fn process_job(con: MultiplexedConnection, job: &Job) -> Result<(), ()> {
     //insert jobid to queue if delay < 1
     debug!("Process Job");
 
-    let result: Option<String> = redis::cmd("SET")
+    let _: Option<String> = redis::cmd("SET")
         .arg(&job.job_id)
         .arg(serde_json::to_string(&job).unwrap())
         .query_async(&mut con.clone())
@@ -209,7 +218,7 @@ pub async fn process_delay_jobs() {
         let result: Vec<String> = redis::cmd("zrangebyscore")
             .arg("delay_job")
             .arg("-inf")
-            .arg(&ts)
+            .arg(ts)
             .query_async(&mut mycon.clone())
             .await
             .unwrap();
@@ -226,7 +235,7 @@ pub async fn process_delay_jobs() {
                 .unwrap();
             debug!("job: {:?}", job);
 
-            let result: Option<i32> = redis::cmd("ZREM")
+            let _: Option<i32> = redis::cmd("ZREM")
                 .arg("delay_job")
                 .arg(job_id)
                 .query_async(&mut mycon.clone())
@@ -234,7 +243,7 @@ pub async fn process_delay_jobs() {
                 .unwrap();
 
             match &job {
-                Some(t) => (),
+                Some(_) => (),
                 None => continue,
             }
 
