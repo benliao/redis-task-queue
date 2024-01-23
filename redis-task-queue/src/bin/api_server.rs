@@ -13,7 +13,7 @@ use log::*;
 
 use dotenvy::dotenv;
 
-use redis_task_queue::{delete_job, insert_job, pop_job, process_delay_jobs, queue_len};
+use redis_task_queue::{delete_task, insert_task, pop_task, process_delay_tasks, queue_len};
 
 use tokio::task;
 
@@ -98,11 +98,11 @@ async fn main() {
         .await
         .unwrap();
 
-    let join = task::spawn(process_delay_jobs());
+    let join = task::spawn(process_delay_tasks());
 
     let app = Router::new()
-        .route("/queue-api/:project/:queue", put(insert_job).get(pop_job))
-        .route("/queue-api/:project/:queue/job/:job_id", delete(delete_job))
+        .route("/queue-api/:project/:queue", put(insert_task).get(pop_task))
+        .route("/queue-api/:project/:queue/delete/:task_id", delete(delete_task))
         .route("/queue-api/:project/:queue/size", get(queue_len))
         .with_state(con)
         .layer(middleware::from_extractor::<RequireAuth>());

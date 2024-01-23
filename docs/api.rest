@@ -1,7 +1,18 @@
 @token=xZ5yXTRsRVTFXZXPrmbHd0aW9uIHR
+@project=project1
+@queue=q0
+@delay=0
+@ttl=60
+@tries=3
+@ttr=60
+
+# Change this to the real task id returned by push/get request.
+@task_id=ae6cdc16-865b-4f51-903f-c359d78d9661
 
 # @name push a new task into the queue
-put http://127.0.0.1:7766/queue-api/project1/q0?delay=0&ttl=60&tries=3
+# @param project
+# @param queue
+put http://127.0.0.1:7766/queue-api/{{project}}/{{queue}}?delay={{delay}}&ttl={{ttl}}&tries={{tries}}
 X-token: {{token}}
 
 {
@@ -11,17 +22,17 @@ X-token: {{token}}
 ###
 
 # @name get a task from the task queue
-get http://127.0.0.1:7766/queue-api/project1/q0?ttr=60
+get http://127.0.0.1:7766/queue-api/{{project}}/{{queue}}?ttr={{ttr}}
 X-token: {{token}}
 
 ###
 
 # @name Queue size
-get http://127.0.0.1:7766/queue-api/project1/q0/size
+get http://127.0.0.1:7766/queue-api/{{project}}/{{queue}}/size
 X-token: {{token}}
 
-@task_id=a0fa0068-97cf-4be9-bf81-703372adf652
+###
 
 # @name Delete Task
-delete http://127.0.0.1:7766/queue-api/project1/q0/job/{{task_id}}
+delete http://127.0.0.1:7766/queue-api/{{project}}/{{queue}}/delete/{{task_id}}
 X-token: {{token}}
