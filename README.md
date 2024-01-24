@@ -2,6 +2,8 @@
 
 A task queue based on redis using Rust language.
 
+This project is inspired by a golang version redis queue api server. [https://github.com/bitleak/lmstfy]()
+
 ## Quick start
 
 Copy .env.example to .env and update
