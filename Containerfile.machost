@@ -1,0 +1,11 @@
+FROM redis/redis-stack-server:latest
+
+COPY target/x86_64-unknown-linux-gnu/release/api-server /root/
+
+COPY .env /root/
+COPY api-token.json /root/
+COPY start.sh /root/
+
+WORKDIR /root/
+
+CMD  ./start.sh
