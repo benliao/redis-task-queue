@@ -2,8 +2,7 @@
 
 A task queue based on redis using Rust language.
 
-
-## Fast start
+## Quick start
 
 Copy .env.example to .env and update
 
@@ -28,7 +27,11 @@ All the APIs call examples are in the file docs/api.rest.
 
 ### Cross Build Linux target from MacOS
 
+If you are working in macos like me, please follow the below steps to cross build linux target.
+
 ```
 # install pre build cross compiling tool
 $ brew install SergioBenitez/osxct/x86_64-unknown-linux-gnu
 ```
+
+ Run *cross_build.sh*

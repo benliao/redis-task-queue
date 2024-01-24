@@ -4,3 +4,4 @@ api-token.json
 Cargo.lock
 dump.rdb
 target
+Containerfile
