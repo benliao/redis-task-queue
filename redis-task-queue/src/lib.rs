@@ -37,9 +37,9 @@ pub async fn queue_len(
         .await
         .unwrap();
 
-    (StatusCode::OK, format!("{}", result.unwrap())).into_response()
-}
+    Json(result.unwrap()).into_response()
 
+}
 pub async fn delete_task(
     State(con): State<MultiplexedConnection>,
     Path((_project, _queue_id, task_id)): Path<(String, String, String)>,

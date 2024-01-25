@@ -7,6 +7,8 @@ use axum::{
     RequestPartsExt, Router,
 };
 
+use tower_http::cors::CorsLayer;
+
 use serde::{Deserialize, Serialize};
 
 use log::*;
@@ -100,13 +102,16 @@ async fn main() {
 
     let join = task::spawn(process_delay_tasks());
 
+    let cors_layer = CorsLayer::permissive();
+
     let app = Router::new()
         .route("/queue-api/:project/:queue", put(insert_task).get(pop_task))
         .route("/queue-api/:project/:queue/delete/:task_id", delete(delete_task))
         .route("/queue-api/:project/:queue/size", get(queue_len))
+        .layer(cors_layer)
         .with_state(con)
         .layer(middleware::from_extractor::<RequireAuth>());
-
+        
     let addr = std::env::var("API_BIND_ADDR")
         .unwrap()
         .parse()

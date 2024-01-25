@@ -2,7 +2,7 @@
 @project=project1
 @queue=q0
 @delay=0
-@ttl=60
+@ttl=36000
 @tries=3
 @ttr=60
 @url=http://127.0.0.1:7766
