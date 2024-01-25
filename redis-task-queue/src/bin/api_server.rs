@@ -8,6 +8,7 @@ use axum::{
 };
 
 use tower_http::cors::CorsLayer;
+use tower_http::trace::TraceLayer;
 
 use serde::{Deserialize, Serialize};
 
@@ -108,9 +109,11 @@ async fn main() {
         .route("/queue-api/:project/:queue", put(insert_task).get(pop_task))
         .route("/queue-api/:project/:queue/delete/:task_id", delete(delete_task))
         .route("/queue-api/:project/:queue/size", get(queue_len))
-        .layer(cors_layer)
         .with_state(con)
-        .layer(middleware::from_extractor::<RequireAuth>());
+        .layer(middleware::from_extractor::<RequireAuth>())
+        .layer(cors_layer)
+        .layer(TraceLayer::new_for_http())
+        ;
         
     let addr = std::env::var("API_BIND_ADDR")
         .unwrap()

@@ -32,6 +32,10 @@ X-token: {{token}}
 get {{url}}/queue-api/{{project}}/{{queue}}/size
 X-token: {{token}}
 
+//access-control-allow-origin: *
+//cache-control: no-cache
+//strict-transport-security: max-age=31556926; includeSubDomains; preload
+
 ###
 
 # @name Delete Task
