@@ -114,7 +114,9 @@ async fn main() {
         .layer(cors_layer)
         .layer(TraceLayer::new_for_http())
         ;
-        
+// Reade the following tips about cors layer placement.        
+//https://www.appsloveworld.com/rust/34/axum-router-rejecting-cors-options-preflight-with-405-even-with-corslayer
+
     let addr = std::env::var("API_BIND_ADDR")
         .unwrap()
         .parse()
